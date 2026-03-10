@@ -264,24 +264,24 @@ export const FormModule: React.FC<ExerciseProps> = ({ onBack }) => {
                     <div className="flex flex-col md:flex-row gap-6">
                         <div className="flex-1">
                             <label htmlFor="ingredients" className="block text-lg font-semibold text-slate-600 mb-2">
-                                Ingrédients pour un gâteau (Maintenez <span className="text-blue-600 font-bold border border-blue-200 px-1 rounded bg-blue-50 text-sm">Ctrl</span> pour en choisir plusieurs)
+                                Composants d'un ordinateur (Maintenez <span className="text-blue-600 font-bold border border-blue-200 px-1 rounded bg-blue-50 text-sm">Ctrl</span> pour en choisir plusieurs)
                             </label>
                             <select 
                                 multiple
                                 id="ingredients"
                                 value={formData.ingredients}
                                 onChange={handleMultiSelectChange}
-                                onFocus={() => speak("Pour choisir plusieurs ingrédients, maintenez la touche Contrôle appuyée pendant que vous cliquez.")}
+                                onFocus={() => speak("Pour choisir plusieurs composants de l'ordinateur, maintenez la touche Contrôle appuyée pendant que vous cliquez.")}
                                 className="w-full text-xl p-4 border-2 border-slate-300 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none bg-white h-48"
                             >
-                                <option value="Farine">Farine</option>
-                                <option value="Sucre">Sucre</option>
-                                <option value="Oeufs">Oeufs</option>
-                                <option value="Beurre">Beurre</option>
-                                <option value="Lait">Lait</option>
-                                <option value="Chocolat">Chocolat</option>
-                                <option value="Levure">Levure</option>
-                                <option value="Vanille">Vanille</option>
+                                <option value="Microprocesseur">Microprocesseur</option>
+                                <option value="Mémoire RAM">Mémoire RAM</option>
+                                <option value="Disque dur ssd ">Disque dur ssd </option>
+                                <option value="Cable HDMI PC vers TV">Cable HDMI PC vers TV</option>
+                                <option value="Cable USB type A/C/micro/mini">Cable USB type A/C/micro/mini</option>
+                                <option value="Disque dur externe USB">Disque dur externe USB</option>
+                                <option value="carte mère">Carte mère</option>
+                                <option value="Carte graphique">Carte graphique</option>
                             </select>
                         </div>
                         <div className="flex-1 bg-white p-4 rounded-xl border border-slate-200 flex flex-col justify-center">
