@@ -6,8 +6,7 @@ export enum ModuleType {
   NAVIGATION = 'NAVIGATION',
   SECURITY = 'SECURITY',
   FORM = 'FORM',
-  HARDWARE = 'HARDWARE',
-  ADVANCED_MOUSE = 'ADVANCED_MOUSE'
+  HARDWARE = 'HARDWARE'
 }
 
 export interface ModuleDefinition {

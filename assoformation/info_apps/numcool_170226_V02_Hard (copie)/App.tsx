@@ -8,7 +8,6 @@ import { NavigationModule } from './modules/NavigationModule';
 import { SecurityModule } from './modules/SecurityModule';
 import { FormModule } from './modules/FormModule';
 import { HardwareModule } from './modules/HardwareModule';
-import { AdvancedMouseModule } from './modules/AdvancedMouseModule';
 import { Button } from './components/Button';
 import { SoundProvider, useSound } from './contexts/SoundContext';
 
@@ -69,13 +68,6 @@ const MODULES: ModuleDefinition[] = [
     description: "Remplir des cases",
     icon: "📝",
     color: "bg-pink-100 border-pink-300 hover:bg-pink-200"
-  },
-  {
-    id: ModuleType.ADVANCED_MOUSE,
-    title: "7. Souris Avancée",
-    description: "Éditeur 3D (Déco)",
-    icon: "🏠",
-    color: "bg-indigo-100 border-indigo-300 hover:bg-indigo-200"
   }
 ];
 
@@ -116,8 +108,6 @@ const AppContent: React.FC = () => {
         return <FormModule onComplete={handleBack} onBack={handleBack} />;
       case ModuleType.HARDWARE:
         return <HardwareModule onComplete={handleBack} onBack={handleBack} />;
-      case ModuleType.ADVANCED_MOUSE:
-        return <AdvancedMouseModule onComplete={handleBack} onBack={handleBack} />;
       default:
         return null;
     }
