@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Clavier AZERTY - Laptop</title>
+    <style>
+        :root { --success: #27ae60; --error: #e74c3c; --primary: #3498db; --warning: #f39c12; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; padding: 20px; color: #333; }
+        .container { max-width: 950px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #2c3e50; border-bottom: 3px solid var(--primary); padding-bottom: 10px; }
+        
+        /* BANQUE D'AIDE AMÉLIORÉE */
+        .helper-box { background: #e8f4fd; padding: 20px; border-radius: 8px; margin-bottom: 25px; border-left: 5px solid var(--primary); }
+        .display-name { 
+            background: #2c3e50; color: white; padding: 10px; border-radius: 5px; 
+            text-align: center; margin-bottom: 15px; font-weight: bold; min-height: 20px; font-size: 1.1em;
+        }
+        .item-to-copy { 
+            font-size: 1.6em; cursor: pointer; background: #fff; padding: 8px 12px; 
+            border: 2px solid #ddd; border-radius: 6px; margin: 4px; display: inline-block; 
+            transition: all 0.2s; user-select: all;
+        }
+        .item-to-copy:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .item-to-copy:active { background-color: #d1ecf1; }
+
+        .method-card { background: white; padding: 15px; border-radius: 5px; margin-top: 15px; border: 1px solid #c3daed; line-height: 1.8; }
+        .key { background: #f8f9fa; border: 1px solid #adb5bd; border-radius: 4px; padding: 3px 8px; font-family: monospace; font-weight: bold; box-shadow: 0 2px 0 #999; }
+        
+        /* GRILLE EXERCICES */
+        .exercise-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .field-group { display: flex; flex-direction: column; margin-bottom: 10px; }
+        label { font-weight: 600; margin-bottom: 5px; font-size: 0.9em; color: #444; }
+        input, textarea { padding: 12px; border: 2px solid #bdc3c7; border-radius: 6px; font-size: 16px; transition: 0.3s; }
+        
+        .valid { border-color: var(--success) !important; background-color: #f1f9f4; }
+        .invalid { border-color: var(--warning) !important; background-color: #fffaf0; }
+        .feedback { font-size: 0.85em; margin-top: 4px; font-weight: bold; min-height: 1.2em; }
+        .feedback.ok { color: var(--success); }
+        .feedback.ko { color: var(--error); }
+
+        .pwd-container { position: relative; display: flex; align-items: center; }
+        .pwd-container input { width: 100%; }
+        .toggle-pwd { position: absolute; right: 10px; cursor: pointer; background: #eee; border: none; padding: 5px 10px; border-radius: 4px; }
+
+        .btn-submit { display: block; width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1.2em; font-weight: bold; cursor: pointer; margin-top: 30px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Entraînement Clavier & Souris</h1>
+
+    <div class="helper-box">
+        <strong>📋 Étape 1 : Cliquez sur un symbole pour voir son nom et le sélectionner</strong>
+        <div id="nameDisplay" class="display-name">Cliquez sur un symbole ci-dessous</div>
+        
+        <div id="emojiBank">
+            <span class="item-to-copy" title="Fusée">🚀</span>
+            <span class="item-to-copy" title="Ordinateur portable">💻</span>
+            <span class="item-to-copy" title="Étincelles">✨</span>
+            <span class="item-to-copy" title="Feu">🔥</span>
+            <span class="item-to-copy" title="Arc-en-ciel">🌈</span>
+            <span class="item-to-copy" title="Cerveau">🧠</span>
+            <span class="item-to-copy" title="Cible">🎯</span>
+            <span class="item-to-copy" title="Arobase">@</span>
+            <span class="item-to-copy" title="Dièse">#</span>
+            <span class="item-to-copy" title="Tilde">~</span>
+            <span class="item-to-copy" title="Accolade ouvrante">{</span>
+            <span class="item-to-copy" title="Accolade fermante">}</span>
+            <span class="item-to-copy" title="Crochet ouvrant">[</span>
+            <span class="item-to-copy" title="Crochet fermant">]</span>
+            <span class="item-to-copy" title="Barre verticale (Pipe)">|</span>
+            <span class="item-to-copy" title="Antislash (Barre oblique inversée)">\</span>
+            <span class="item-to-copy" title="Symbole Euro">€</span>
+            <span class="item-to-copy" title="Dollar">$</span>
+            <span class="item-to-copy" title="Pourcentage">%</span>
+            <span class="item-to-copy" title="Esperluette (Et commercial)">&amp;</span>
+            <span class="item-to-copy" title="Astérisque">*</span>
+            <span class="item-to-copy" title="Inférieur à">&lt;</span>
+            <span class="item-to-copy" title="Supérieur à">&gt;</span>
+            <span class="item-to-copy" title="Accent grave (Backtick)">`</span>
+            <span class="item-to-copy" title="Point-virgule">;</span>
+            <span class="item-to-copy" title="Deux points">:</span>
+            <span class="item-to-copy" title="Point d'interrogation">?</span>
+            <span class="item-to-copy" title="Point d'exclamation">!</span>
+            <span class="item-to-copy" title="Tiret du bas (Underscore)">_</span>
+            <span class="item-to-copy" title="Paragraphe / Section">§</span>
+        </div>
+
+        <div class="method-card">
+            <strong>⌨️ Étape 2 : Copier / Coller au clavier</strong><br>
+            1. Maintenez <span class="key">Ctrl</span> enfoncé, puis appuyez sur <span class="key">C</span> pour <strong>Copier</strong>.<br>
+            2. Cliquez dans un champ de saisie.<br>
+            3. Maintenez <span class="key">Ctrl</span> enfoncé, puis appuyez sur <span class="key">V</span> pour <strong>Coller</strong>.
+        </div>
+    </div>
+
+    <form id="trainingForm">
+        <div class="exercise-grid" id="grid50"></div>
+
+        <hr style="margin: 40px 0; border: 0; border-top: 2px dashed #eee;">
+        <h3 style="color: var(--primary);">Vérifications de Formulaire</h3>
+
+        <div class="exercise-grid">
+            <div class="field-group">
+                <label>51. Votre Email (vérification @ et point) :</label>
+                <input type="email" id="email" placeholder="nom@mail.com">
+                <div id="email-feedback" class="feedback"></div>
+            </div>
+
+            <div class="field-group">
+                <label>52. Date du jour (cliquez sur le calendrier) :</label>
+                <input type="date" id="date">
+                <div id="date-feedback" class="feedback"></div>
+            </div>
+
+            <div class="field-group">
+                <label>53. Mot de passe (8 car. min + 1 spécial @#$...) :</label>
+                <div class="pwd-container">
+                    <input type="password" id="password">
+                    <button type="button" class="toggle-pwd" onclick="togglePassword()">👁️ Voir</button>
+                </div>
+                <div id="pwd-feedback" class="feedback"></div>
+            </div>
+
+            <div class="field-group">
+                <label>54. Téléphone (10 chiffres collés) :</label>
+                <input type="tel" id="phone" placeholder="0612345678">
+                <div id="phone-feedback" class="feedback"></div>
+            </div>
+        </div>
+
+        <h3 style="color: var(--primary);">Saisie libre et texte long</h3>
+        <div class="exercise-grid">
+            <div class="field-group"><label>55. Que voulez-vous apprendre en informatique ?</label><textarea rows="3"></textarea></div>
+            <div class="field-group"><label>56. Décrivez votre ordinateur (couleur, marque...) :</label><textarea rows="3"></textarea></div>
+            <div class="field-group"><label>57. Tapez une phrase avec 3 emojis :</label><textarea rows="3"></textarea></div>
+            <div class="field-group"><label>58. Votre avis sur cet exercice :</label><textarea rows="3"></textarea></div>
+        </div>
+
+        <button type="submit" class="btn-submit">Terminer et valider</button>
+    </form>
+</div>
+
+<script>
+    // Gestion de l'affichage du nom au clic
+    const items = document.querySelectorAll('.item-to-copy');
+    const display = document.getElementById('nameDisplay');
+
+    items.forEach(item => {
+        item.addEventListener('click', function() {
+            const name = this.getAttribute('title');
+            display.innerText = "Nom du caractère : " + name;
+            display.style.backgroundColor = "#3498db";
+            setTimeout(() => { display.style.backgroundColor = "#2c3e50"; }, 500);
+        });
+    });
+
+    // Données des 50 exercices
+    const data = [
+        "Bonjour", "clavier", "MAJUSCULE", "12345", "L'ordinateur", "C'est prêt !", "10 €", "50%", "Jean-Paul", "Laptop",
+        "Arob@se", "Dièse #", "Espace", "Point.com", "Huit (8)", "Neuf [9]", "Dix {10}", "Slash /", "Anti-slash \\", "Pipe |",
+        "Tilde ~", "Plus +", "Moins -", "Égal =", "Étoile *", "Inférieur <", "Supérieur >", "Backtick `", "Dollar $", "https://",
+        "🚀 Fusée", "✨ Briller", "💻 PC", "🔥 Feu", "🌈 Arc", "🧠 Tête", "🎯 Cible", "@aro", "#tag", "€uro",
+        "12.345,67", "5+5=10", "Question ?", "Stop !", "Mélange@#", "AZERTY", "qwerty", "Bas_tiret", "Fin-test", "Terminé !"
+    ];
+
+    const grid = document.getElementById('grid50');
+    data.forEach((text, i) => {
+        const div = document.createElement('div');
+        div.className = 'field-group';
+        div.innerHTML = `
+            <label>${i+1}. Recopiez : <code>${text}</code></label>
+            <input type="text" data-answer="${text}" oninput="checkSimple(this)">
+            <div class="feedback"></div>
+        `;
+        grid.appendChild(div);
+    });
+
+    function checkSimple(input) {
+        const feedback = input.nextElementSibling;
+        if (input.value === input.getAttribute('data-answer')) {
+            input.className = 'valid';
+            feedback.textContent = "✓ Correct !";
+            feedback.className = "feedback ok";
+        } else {
+            input.className = 'invalid';
+            feedback.textContent = "⚠ Erreur de saisie";
+            feedback.className = "feedback ko";
+        }
+    }
+
+    function togglePassword() {
+        const p = document.getElementById('password');
+        p.type = p.type === "password" ? "text" : "password";
+    }
+
+    // Validations Email / PWD / Tel
+    document.getElementById('email').oninput = function() {
+        const fb = document.getElementById('email-feedback');
+        if(/\S+@\S+\.\S+/.test(this.value)) { this.className='valid'; fb.innerText="Email correct"; fb.className="feedback ok"; }
+        else { this.className='invalid'; fb.innerText="Format attendu : nom@exemple.fr"; fb.className="feedback ko"; }
+    };
+
+    document.getElementById('password').oninput = function() {
+        const fb = document.getElementById('pwd-feedback');
+        const spec = /[!@#$%^&*(),.?":{}|<>]/.test(this.value);
+        if(this.value.length >= 8 && spec) { this.className='valid'; fb.innerText="Mot de passe sécurisé"; fb.className="feedback ok"; }
+        else { this.className='invalid'; fb.innerText="8 car. + 1 signe spécial requis"; fb.className="feedback ko"; }
+    };
+
+    document.getElementById('phone').oninput = function() {
+        const fb = document.getElementById('phone-feedback');
+        if(/^[0-9]{10}$/.test(this.value)) { this.className='valid'; fb.innerText="Numéro valide"; fb.className="feedback ok"; }
+        else { this.className='invalid'; fb.innerText="Entrez 10 chiffres"; fb.className="feedback ko"; }
+    };
+
+    document.getElementById('trainingForm').onsubmit = (e) => {
+        e.preventDefault();
+        alert("Félicitations, vous avez maîtrisé le clavier et la souris !");
+    };
+</script>
+
+</body>
+</html>
