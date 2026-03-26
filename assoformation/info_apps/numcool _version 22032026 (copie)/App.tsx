@@ -9,7 +9,6 @@ import { SecurityModule } from './modules/SecurityModule';
 import { FormModule } from './modules/FormModule';
 import { HardwareModule } from './modules/HardwareModule';
 import { AdvancedMouseModule } from './modules/AdvancedMouseModule';
-import { TrainingModule } from './modules/TrainingModule';
 import { Button } from './components/Button';
 import { SoundProvider, useSound } from './contexts/SoundContext';
 
@@ -77,13 +76,6 @@ const MODULES: ModuleDefinition[] = [
     description: "Éditeur 3D (Déco)",
     icon: "🏠",
     color: "bg-indigo-100 border-indigo-300 hover:bg-indigo-200"
-  },
-  {
-    id: ModuleType.TRAINING,
-    title: "8. Entrainement",
-    description: "Souris & Clavier",
-    icon: "🎯",
-    color: "bg-cyan-100 border-cyan-300 hover:bg-cyan-200"
   }
 ];
 
@@ -126,8 +118,6 @@ const AppContent: React.FC = () => {
         return <HardwareModule onComplete={handleBack} onBack={handleBack} />;
       case ModuleType.ADVANCED_MOUSE:
         return <AdvancedMouseModule onComplete={handleBack} onBack={handleBack} />;
-      case ModuleType.TRAINING:
-        return <TrainingModule onComplete={handleBack} onBack={handleBack} />;
       default:
         return null;
     }

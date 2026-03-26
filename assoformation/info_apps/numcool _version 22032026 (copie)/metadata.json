@@ -1,0 +1,8 @@
+
+{
+  "name": "Num'Cool",
+  "description": "Une application web interactive et accessible pour apprendre les bases de l'informatique sans stress.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
