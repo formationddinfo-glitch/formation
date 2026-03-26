@@ -177,7 +177,7 @@
         const div = document.createElement('div');
         div.className = 'field-group';
         div.innerHTML = `
-            <label>${i+1}. Recopiez : <code>${text}</code></label>
+            <label>${i+1}. Saisir au clavier ou copier coller : <strong><code style="font-size: 1.44em; color: #d35400;">${text}</code></strong></label>
             <input type="text" data-answer="${text}" oninput="checkSimple(this)">
             <div class="feedback"></div>
         `;
