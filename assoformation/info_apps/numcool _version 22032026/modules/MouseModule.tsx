@@ -36,6 +36,7 @@ export const MouseModule: React.FC<ExerciseProps> = ({ onComplete, onBack }) => 
   // Copy Paste exercise state
   const [sourceText, setSourceText] = useState("");
   const [pastedText, setPastedText] = useState("");
+  const [hasSucceededCopyPaste, setHasSucceededCopyPaste] = useState(false);
   const [activeKeys, setActiveKeys] = useState<{ [key: string]: boolean }>({});
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -88,6 +89,7 @@ export const MouseModule: React.FC<ExerciseProps> = ({ onComplete, onBack }) => 
       case MouseStep.COPY_PASTE:
         setSourceText("");
         setPastedText("");
+        setHasSucceededCopyPaste(false);
         speak("Exercice 7 : Copier-Coller. Écrivez un mot, copiez-le et collez-le dans la deuxième case.");
         break;
     }
@@ -206,7 +208,7 @@ export const MouseModule: React.FC<ExerciseProps> = ({ onComplete, onBack }) => 
     setTimeout(() => {
         if (text.trim() !== "" && text === sourceText) {
           setPastedText(text);
-          setStepCompleted(true);
+          setHasSucceededCopyPaste(true);
           speak("Bravo ! Le copier-coller est réussi.");
         } else if (text !== "") {
           setPastedText(text);
@@ -219,7 +221,7 @@ export const MouseModule: React.FC<ExerciseProps> = ({ onComplete, onBack }) => 
     const val = e.target.value;
     setPastedText(val);
     if (val.trim() !== "" && val === sourceText) {
-      setStepCompleted(true);
+      setHasSucceededCopyPaste(true);
       speak("Bravo ! Copier-coller réussi.");
     }
   };
@@ -246,7 +248,13 @@ export const MouseModule: React.FC<ExerciseProps> = ({ onComplete, onBack }) => 
         <div className="w-full flex justify-between items-center mb-8">
           <Button onClick={onBack} variant="secondary">← Retour</Button>
           <div className="text-2xl font-bold text-slate-500">Module 1 : La Souris</div>
-          <div className="w-24 md:w-32"></div>
+          <div className="w-auto md:w-32 flex justify-end">
+            {step !== MouseStep.INTRO && step !== MouseStep.COMPLETE && step !== MouseStep.COPY_PASTE && !stepCompleted && (
+              <Button onClick={restartStep} variant="secondary" className="text-sm px-3 py-2 bg-white hover:bg-slate-100 text-slate-600 border-slate-300">
+                🔄 Refaire
+              </Button>
+            )}
+          </div>
         </div>
 
         <div className="w-full bg-white rounded-3xl shadow-2xl p-8 relative border-4 border-blue-100 min-h-[60vh] flex flex-col">
@@ -401,6 +409,16 @@ export const MouseModule: React.FC<ExerciseProps> = ({ onComplete, onBack }) => 
                         </div>
                     </div>
                  </div>
+              </div>
+              <div className="mt-8 h-16 flex gap-4 items-center justify-center w-full">
+                 <Button onClick={restartStep} variant="secondary" className="px-6 py-3 text-lg shadow-sm border-slate-300 hover:bg-slate-100 text-slate-600">
+                    🔄 Refaire
+                 </Button>
+                 {hasSucceededCopyPaste && (
+                    <Button onClick={() => setStepCompleted(true)} variant="success" className="animate-bounce px-8 py-3 text-lg shadow-lg">
+                       ✅ J'ai terminé (Quitter l'exercice)
+                    </Button>
+                 )}
               </div>
             </div>
           )}
