@@ -9,11 +9,10 @@ enum MouseStep {
   HOVER = 1,
   CLICK = 2,
   RIGHT_CLICK = 3,
-  DOUBLE_CLICK = 4,
-  SCROLL = 5,
-  DRAG = 6,
-  COPY_PASTE = 7,
-  COMPLETE = 8
+  SCROLL = 4,
+  DRAG = 5,
+  COPY_PASTE = 6,
+  COMPLETE = 7
 }
 
 interface Balloon {
@@ -30,7 +29,6 @@ export const MouseModule: React.FC<ExerciseProps> = ({ onComplete, onBack }) => 
   const [balloons, setBalloons] = useState<Balloon[]>([]);
   const [targets, setTargets] = useState<{id: number, x: number, y: number, color: string}[]>([]);
   const [rightClickTargets, setRightClickTargets] = useState<{id: number, x: number, y: number}[]>([]);
-  const [doubleClickTargets, setDoubleClickTargets] = useState<{id: number, x: number, y: number}[]>([]);
   const [isDropped, setIsDropped] = useState(false);
   
   // Copy Paste exercise state
@@ -74,21 +72,17 @@ export const MouseModule: React.FC<ExerciseProps> = ({ onComplete, onBack }) => 
         generateRightClickTargets();
         speak("Exercice 3 : Le clic droit. Utilisez le bouton de droite sur les carrés oranges.");
         break;
-      case MouseStep.DOUBLE_CLICK:
-        generateDoubleClickTargets();
-        speak("Exercice 4 : Le double clic. Cliquez deux fois rapidement sur les différents boutons violets.");
-        break;
       case MouseStep.SCROLL:
-        speak("Exercice 5 : La molette. Faites rouler la petite roue pour trouver le bouton caché en bas.");
+        speak("Exercice 4 : La molette. Faites rouler la petite roue pour trouver le bouton caché en bas.");
         break;
       case MouseStep.DRAG:
         setIsDropped(false);
-        speak("Exercice 6 : Glisser-Déposer. Déplacez le carré bleu dans la zone verte.");
+        speak("Exercice 5 : Glisser-Déposer. Déplacez le carré bleu dans la zone verte.");
         break;
       case MouseStep.COPY_PASTE:
         setSourceText("");
         setPastedText("");
-        speak("Exercice 7 : Copier-Coller. Écrivez un mot, copiez-le et collez-le dans la deuxième case.");
+        speak("Exercice 6 : Copier-Coller. Écrivez un mot, copiez-le et collez-le dans la deuxième case.");
         break;
     }
   };
@@ -118,14 +112,6 @@ export const MouseModule: React.FC<ExerciseProps> = ({ onComplete, onBack }) => 
       id: i,
       x: 20 + (i * 30),
       y: 40
-    })));
-  };
-
-  const generateDoubleClickTargets = () => {
-    setDoubleClickTargets(Array.from({ length: 12 }, (_, i) => ({
-      id: i,
-      x: 5 + (i % 4) * 24 + Math.random() * 5,
-      y: 10 + Math.floor(i / 4) * 28 + Math.random() * 5
     })));
   };
 
@@ -161,18 +147,6 @@ export const MouseModule: React.FC<ExerciseProps> = ({ onComplete, onBack }) => 
       speak("Super ! Vous maîtrisez le clic droit.");
     } else {
       speak("Clic droit réussi !");
-    }
-  };
-
-  const handleDoubleClickTarget = (e: React.MouseEvent, id: number) => {
-    e.preventDefault();
-    const newTargets = doubleClickTargets.filter(t => t.id !== id);
-    setDoubleClickTargets(newTargets);
-    if (newTargets.length === 0) {
-      setStepCompleted(true);
-      speak("Génial ! Vous maîtrisez le double clic parfaitement.");
-    } else {
-      speak("Double clic réussi !");
     }
   };
 
@@ -238,7 +212,7 @@ export const MouseModule: React.FC<ExerciseProps> = ({ onComplete, onBack }) => 
       <div className="absolute top-0 left-0 w-full h-4 bg-slate-200">
         <div 
           className="h-full bg-blue-500 transition-all duration-500" 
-          style={{ width: `${(step / 8) * 100}%` }}
+          style={{ width: `${(step / 7) * 100}%` }}
         />
       </div>
 
@@ -313,19 +287,6 @@ export const MouseModule: React.FC<ExerciseProps> = ({ onComplete, onBack }) => 
                   className="absolute w-32 h-32 bg-orange-500 border-4 border-orange-600 rounded-xl shadow-xl flex flex-col items-center justify-center transform hover:scale-105 transition-all cursor-context-menu">
                   <span className="text-4xl mb-2">🖱️</span>
                   <span className="text-white font-bold text-lg">CLIC DROIT</span>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {step === MouseStep.DOUBLE_CLICK && (
-            <div className="h-96 w-full relative flex-grow mt-4">
-              <h3 className="text-2xl font-bold text-center mb-4 text-slate-500">DOUBLE CLIC sur les boutons violets</h3>
-              {doubleClickTargets.map(t => (
-                <div key={t.id} onDoubleClick={(e) => handleDoubleClickTarget(e, t.id)} style={{ top: `${t.y}%`, left: `${t.x}%` }}
-                  className="absolute w-24 h-24 bg-purple-500 border-4 border-purple-600 rounded-xl shadow-xl flex flex-col items-center justify-center transform hover:scale-105 transition-all cursor-pointer select-none">
-                  <span className="text-3xl mb-1">🖱️</span>
-                  <span className="text-white font-bold text-sm text-center leading-tight">DOUBLE<br/>CLIC</span>
                 </div>
               ))}
             </div>
